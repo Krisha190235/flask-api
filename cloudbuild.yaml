@@ -4,24 +4,16 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'YOUR_DOCKERHUB_USERNAME/flask-api:$SHORT_SHA'
+      - 'krisha1902/flask-api:$SHORT_SHA'
       - '.'
 
   # Step 2: Push the image to Docker Hub
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'YOUR_DOCKERHUB_USERNAME/flask-api:$SHORT_SHA'
+      - 'krisha1902/flask-api:$SHORT_SHA'
 
-  # Step 3: Deploy updated image to GKE
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'set'
-      - 'image'
-      - 'deployment/flask-api'
-      - 'flask-api=YOUR_DOCKERHUB_USERNAME/flask-api:$SHORT_SHA'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=australia-southeast1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=flask-cluster'
+options:
+  logging: CLOUD_LOGGING_ONLY
 
 timeout: '600s'
