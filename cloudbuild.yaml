@@ -1,20 +1,26 @@
 steps:
-  # Step 1: Build the Docker image
+  # Step 1: Login to Docker Hub
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'login'
+      - '-u'
+      - 'krisha1902'
+      - '-p'
+      - 'Krisha@1902'
+
+  # Step 2: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
       - '-t'
-      - 'gcr.io/$PROJECT_ID/flask-api:$SHORT_SHA'
+      - 'krisha1902/flask-api:$SHORT_SHA'
       - '.'
 
-  # Step 2: Push to Google Container Registry
+  # Step 3: Push the image to Docker Hub
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'gcr.io/$PROJECT_ID/flask-api:$SHORT_SHA'
-
-images:
-  - 'gcr.io/$PROJECT_ID/flask-api:$SHORT_SHA'
+      - 'krisha1902/flask-api:$SHORT_SHA'
 
 options:
   logging: CLOUD_LOGGING_ONLY
